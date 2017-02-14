@@ -13,6 +13,27 @@ UI Routes:
 
 #### Introducing MongoDB
 
+pre-req:
+
+1) Install MongoDB
+
+  `brew install mongodb`
+
+  Don't have [homebrew?](https://brew.sh/)
+
+  `/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+
+
+2) Make the database in Locally
+
+  `mkdir -p /data/db` or `sudo mkdir -p /data/db`
+
+3) Run MongoDB Locally
+
+  `mongod` or `sudo mongod`
+
+----
+
 Mongodb is a non-relational database. It is really nice for javascript developers because it stores data in formats that we are used to working with. A single piece of data is known as a document. In our application here is what a document will look like:
 
 ```js
@@ -136,3 +157,107 @@ app.get('/post', function(req, res) {
 ```
 
 Make sure you test your endpoints before committing your code.
+
+----
+
+#### Step Two: Design our API
+
+Before we can create and save any data in our database we need to define what our data will look like. We are going to use something called a 'Schema', which will be used as a blueprint when creating new bears.
+
+`npm install --save mongoose`
+
+`mkdir models`
+
+`touch models/bear.js`
+
+```js
+// models/bears.js
+
+
+```
+
+Lastly, import this file into `server.js`
+
+`var Bear = require('./models/bear');`
+
+The last thing we need to do before designing our API, is to require and configure our database in `server.js`
+
+```js
+var mongoose = require('mongoose');
+mongoose.connect("mongodb://localhost/mis-ejs-bears");
+
+```
+
+----
+
+We now need to design our API, as a way to interact with our Database.
+API implementation will follow this table:
+
+| HTTP Verb     | Path          | Response  |
+| ------------- |:-------------:| -----:|
+| `GET`         | /api/bears    | responds with all bears in a our database |
+| `POST`        | /api/bears    |   creates a new bear, responds with JSON of this bear |
+| `GET`         | /api/bears/:bear_id      |    responds with JSON for the specific bear|
+| `PUT`         | /api/bears/:bear_id      |    edit ability for specific bear|
+| `DELETE`      | /api/bears/:bear_id      |    deletes a specific bear |
+
+Let's implement the first two routes on this table:
+```js
+  // server.js
+
+  app.get('/api/bears', function(req, res){
+    Bear.find(function(err, data){
+      if(err){
+        console.log("Error finding your bear!")
+      } else {
+        res.json(data)
+      }
+    })
+  });
+
+  app.post('/api/bears', function(req, res){
+
+    var newBear = new Bear();
+    newBear.name = req.body.name;
+    newBear.species = req.body.species;
+    newBear.color = req.body.color;
+
+    newBear.save(function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+        res.json(data);
+      }
+    })
+  });
+
+
+  // This is the exact same implementation of the POST route, refactored:
+  app.post('/api/bears', function(req, res){
+
+    var newBear = new Bear({
+      name: req.body.name,
+      color: req.body.color,
+      species: req.body.species
+    });
+
+    newBear.save(function(err, data){
+      if(err){
+        console.log(err);
+      } else {
+        res.json(data);
+      }
+    })
+  });
+```
+
+Next we will use __Postman__ to test these two endpoints.
+Test your `GET` method first, it will break if you have an error in your code, otherwise it will return an empty array.
+
+Then test the POST route. (Dont forget to select the URL encoded option.)
+
+After you create a couple of items, test your GET method again.
+
+When your endpoints are working, commit your code.
+
+----
