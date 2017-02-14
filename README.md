@@ -23,9 +23,9 @@ Mongodb is a non-relational database. It is really nice for javascript developer
   }
 ```
 The above is a single document, a bunch of these documents, or bears, is known as a collection. A collection is just an array full of objects.
-```
- var allBears = [someBear, anotherBear, moreBear];
-```
+
+`var allBears = [someBear, anotherBear, moreBear];`
+
 
 When the EJS page to show all bears, is rendered, it will be displaying actual data from our bears collection.
 
@@ -52,21 +52,54 @@ We will be implementing routes using express `app.get` to apply our HTTP verbs t
 A route that goest to our database, retrieves all bears, and sends these bears back in JSON would look like so:
 
 ```js
-app.get('/bears', function(req, res){
-  Bear.find(function(err, bear){
-    if(err){
-     return "error getting all bears from database"
-    } else {
-    res.json(bear)
-  }
+
+  app.get("/bears", function(req, res){
+    Bear.find(function(err, bear){
+      if(err){
+       return "error getting all bears from database"
+      } else {
+      res.json(bear)
+    }
+  });
+
+```
+----
+
+
+### Implementation
+
+#### Step 0: Project Setup
+
+We will begin by creating a basic server configured with express, ejs, and body parser.
+
+`touch server.js`
+
+`npm init` -> hit enter to accept defaults
+
+We do not want to keep track of our node modules in GitHub, so we tell git to ignore all of these files.
+
+`echo "node_modules/" >> .gitignore`
+
+`npm install --save express body-parser ejs`
+
+Make sure you look at `package.json` to see if your dependencies were updated.
+
+Configure your server to create a basic express server, tell it to use the view engine ejs, and apply the body-parser middleware to your application.
+
+```js
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+
+var server = app.listen(3000, function(){
+  console.log('Server 🔥🔥🔥ed up on PORT 3000');
 });
+
 ```
 
-
-
-
-
-
-### tools
-
-### commit our changes over time.
+Ensure that your is functional before committing your code:
+`nodemon server.js`
