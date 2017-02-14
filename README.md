@@ -57,7 +57,7 @@ app.get('/bears', function(req, res){
     if(err){
      return "error getting all bears from database"
     } else {
-    res.json(bear
+    res.json(bear)
   }
 });
 ```
