@@ -173,6 +173,15 @@ Before we can create and save any data in our database we need to define what ou
 ```js
 // models/bears.js
 
+var mongoose = require('mongoose');
+
+var BearSchema = new mongoose.Schema({
+  name: String,
+  color: String,
+  species: String
+});
+
+module.exports = mongoose.model('Bear', BearSchema);
 
 ```
 
