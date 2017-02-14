@@ -2,7 +2,7 @@
 
 __learning Node, Mongo, Mongoose, Express, and EJS__
 
-### description
+### Description
 We are going to build an application which uses EJS to render different pages. The pages will be displaying 'bears'.
 For example:
 
