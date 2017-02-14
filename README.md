@@ -1,4 +1,4 @@
-#### EJS Bear
+#### EJS Bears
 
 __learning Node, Mongo, Mongoose, Express, and EJS__
 
@@ -22,7 +22,7 @@ Mongodb is a non-relational database. It is really nice for javascript developer
     color: "Golden Brown",
   }
 ```
-The above is a single document, a bunch of these documents, or bears, is known as a collection. A collection is just an array full of objects. 
+The above is a single document, a bunch of these documents, or bears, is known as a collection. A collection is just an array full of objects.
 ```
  var allBears = [someBear, anotherBear, moreBear];
 ```
@@ -42,7 +42,7 @@ This verb is used to `create` a new piece of data.
 #### PUT
 This verb is used to edit.
 
-#### DELETE 
+#### DELETE
 An API that implements all of these methods is known as a ### C.R.U.D. API. Because you have the ability to Create, Read, Update, and Delete.
 
 ----
@@ -70,5 +70,3 @@ app.get('/bears', function(req, res){
 ### tools
 
 ### commit our changes over time.
-
-
